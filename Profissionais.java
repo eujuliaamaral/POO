@@ -7,7 +7,11 @@ public class Profissionais {
     double valorConsulta;
     String[] diasAtendimento;
 
-        Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+
+    public Profissionais(){
+    }
+
 
     public Profissionais(String nome, String especialidade){
         this.nome = nome;
@@ -24,10 +28,12 @@ public class Profissionais {
 
     
     public Profissionais cadastro(String nome, String especialidade, String registroPro, double valorConsulta, String[] diasAtendimento){
+        Clinica.totalProfissionais++;
         return new Profissionais(nome, especialidade, registroPro, valorConsulta, diasAtendimento);
     }
 
     public Profissionais cadastro(String nome, String especialidade){
+        Clinica.totalProfissionais++;
         return new Profissionais(nome, especialidade);
     }
 
@@ -56,7 +62,6 @@ public class Profissionais {
         profissional.registroPro = scanner.nextLine();
         System.out.printf("Digite o valor da Cosulta:");
         profissional.valorConsulta = scanner.nextDouble();
-        scanner.nextLine();
 
         return profissional;
     }
