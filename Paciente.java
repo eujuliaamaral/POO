@@ -41,10 +41,12 @@ public class Paciente {
     public Paciente cadastroComplementarCompleto(Paciente paciente){
         System.out.printf("Digite a idade do paciente:");
         paciente.idade = scanner.nextInt();
+        scanner.nextLine();
         System.out.printf("Digite o telefone do paciente:");
         paciente.telefone = scanner.nextLine();
         System.out.printf("O paciente possui convenio (true ou false):");
         paciente.convenio = scanner.nextBoolean();
+        scanner.nextLine();
 
         if (paciente.convenio){
             System.out.printf("Digite o convenio do paciente:");
@@ -59,8 +61,10 @@ public class Paciente {
     public Paciente cadastroComplementarRapido(Paciente paciente){
         System.out.printf("Digite a idade do paciente:");
         paciente.idade = scanner.nextInt();
+        scanner.nextLine();
         System.out.printf("Digite o telefone do paciente:");
         paciente.telefone = scanner.nextLine();
+        scanner.nextLine();
 
         return paciente;
     }

@@ -56,6 +56,7 @@ public class Profissionais {
         profissional.registroPro = scanner.nextLine();
         System.out.printf("Digite o valor da Cosulta:");
         profissional.valorConsulta = scanner.nextDouble();
+        scanner.nextLine();
 
         return profissional;
     }
