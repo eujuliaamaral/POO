@@ -71,7 +71,11 @@ Ao iniciar, o programa exibirá um menu com as seguintes opções:
 
 ##  Autores
 Davi Medeiros Dantas Soares 
+
 Kaio Souto Rodrigues 
+
 Maria Júlia Amaral Lacerda
+
 Mikael Abdias de Lima Santos
+
 Pedro Henrique de Almeida Araujo
