@@ -7,28 +7,28 @@ Um sistema em Java desenvolvido com **Programação Orientada a Objetos (POO)** 
 
 ##  Funcionalidades
 
-- ** Gerenciamento de Pacientes**
+-  Gerenciamento de Pacientes
   - Cadastro de novos pacientes
   - Registro de informações pessoais (nome, CPF, idade, telefone)
   - Suporte a convênios médicos
   - Ativação/desativação de pacientes
 
-- ** Gerenciamento de Profissionais**
+-  Gerenciamento de Profissionais
   - Cadastro de profissionais de saúde
   - Registro de especialidades
   - Definição de valores de consultas
   - Configuração de dias de atendimento
 
-- ** Agendamento de Consultas**
+- Agendamento de Consultas
   - Agendar consultas com pacientes e profissionais
   - Registro de data e horário
   - Tipos de consultas (inicial ou acompanhamento)
 
-- ** Gerenciamento de Pagamentos**
+-  Gerenciamento de Pagamentos
   - Registro e controle de pagamentos
   - Suporte a diferentes formas de pagamento
 
-- ** Relatórios**
+-  Relatórios
   - Geração de relatórios do sistema
 
 ##  Como Usar
