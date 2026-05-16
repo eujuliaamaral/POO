@@ -11,6 +11,9 @@ public class Paciente {
 
     Scanner scanner = new Scanner(System.in);
 
+    public Paciente(){
+    }
+
     public Paciente(String nome, String cpf, boolean ativo){
         this.nome = nome;
         this.cpf = cpf;
@@ -30,11 +33,13 @@ public class Paciente {
     
     public Paciente cadastro(String nome, String cpf, int idade, String telefone, boolean convenio, String tipoconvenio){
         boolean ativo = true;
+        Clinica.totalPacientes++;
         return new Paciente(nome, cpf, idade, telefone, convenio, tipoconvenio, ativo);
     }
 
     public Paciente cadastro(String nome, String cpf){
         boolean ativo = true;
+        Clinica.totalPacientes++;
         return new Paciente(nome, cpf, ativo);
     }
 
@@ -44,6 +49,7 @@ public class Paciente {
         scanner.nextLine();
         System.out.printf("Digite o telefone do paciente:");
         paciente.telefone = scanner.nextLine();
+        scanner.nextLine();
         System.out.printf("O paciente possui convenio (true ou false):");
         paciente.convenio = scanner.nextBoolean();
         scanner.nextLine();
@@ -64,7 +70,6 @@ public class Paciente {
         scanner.nextLine();
         System.out.printf("Digite o telefone do paciente:");
         paciente.telefone = scanner.nextLine();
-        scanner.nextLine();
 
         return paciente;
     }

@@ -5,6 +5,9 @@ public class Consultas {
     String horario;
     String tipo;
 
+    public Consultas(){
+    }
+
     public Consultas(Paciente paciente, Profissionais profissional, String data, String horario){
         this.paciente = paciente;
         this.profissional = profissional;
@@ -22,10 +25,12 @@ public class Consultas {
     }
 
     public Consultas agendar(Paciente paciente, Profissionais profissional, String data, String hora, String tipo){
+        Clinica.totalConsultas++;
         return new Consultas(paciente, profissional, data, hora, tipo);
     }
 
     public Consultas agendar(Paciente paciente, Profissionais profissional, String data, String hora){
+        Clinica.totalConsultas++;
         return new Consultas(paciente, profissional, data, hora);
     }
     
