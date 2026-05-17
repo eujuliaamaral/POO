@@ -613,14 +613,14 @@ public class Main {
                     String temDiagnostico = sc.nextLine();
                     String diagnostico = "";
                     
-                    if(temDiagnostico.equals("S") || temDiagnostico.equals("s")){
+                    if(temDiagnostico.trim().equalsIgnoreCase("S")){
                         System.out.print("Digite o diagnóstico: ");
                         diagnostico = sc.nextLine();
                     }
                     
                     Atendimento atendimento = null;
                     
-                    if(diagnostico.isEmpty()){
+                    if(diagnostico.trim().isEmpty()){
                         atendimento = new Atendimento(observacoes);
                     }else{
                         atendimento = new Atendimento(observacoes, diagnostico);
@@ -629,19 +629,22 @@ public class Main {
                     System.out.print("Deseja registrar procedimentos? (S/N): ");
                     String temProcedimentos = sc.nextLine();
                     
-                    if(temProcedimentos.equals("S") || temProcedimentos.equals("s")){
+                    if(temProcedimentos.trim().equalsIgnoreCase("S")){
                         System.out.print("Registrar um procedimento por vez (1) ou vários de uma vez (2)? ");
                         int opcaoProcedimentos = sc.nextInt();
                         sc.nextLine();
                         
                         if(opcaoProcedimentos == 1){
                             String procedimento = "";
-                            while(!procedimento.equals("sair")){
+                            while(true){
                                 System.out.print("Digite o procedimento (ou deixe em branco para finalizar): ");
                                 procedimento = sc.nextLine();
-                                if(!procedimento.equals(null)){
-                                    atendimento.adicionarProcedimento(procedimento);
+                                
+                                if(procedimento.trim().isEmpty()){
+                                    break;
                                 }
+                                
+                                atendimento.adicionarProcedimento(procedimento);
                             }
                         }else if(opcaoProcedimentos == 2){
                             System.out.print("Digite a quantidade de procedimentos: ");
