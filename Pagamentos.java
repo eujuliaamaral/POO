@@ -91,7 +91,7 @@ public class Pagamentos {
     }
 
     public void exibirResumo(){
-        System.out.println("\n=== RESUMO DO PAGAMENTO ===");
+        System.out.println("\n--- Resumo do pagamento ---");
         System.out.println("Paciente: " + consulta.paciente.nome);
         System.out.println("Profissional: " + consulta.profissional.nome);
         System.out.println("Valor base: R$ " + String.format("%.2f", valorBase));
@@ -105,6 +105,5 @@ public class Pagamentos {
         }
         System.out.println("Data: " + dataPagamento);
         System.out.println("Status: " + status);
-        System.out.println("============================\n");
     }
 }

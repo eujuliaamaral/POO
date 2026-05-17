@@ -394,12 +394,12 @@ public class Main {
                     }
 
                     if(!clinica.validarProfissionalComValor(profissionalEncontrado)){
-                        System.out.println("Este profissional não tem valor de consulta definido. Consulte a administração.");
+                        System.out.println("\nEste profissional não tem valor de consulta definido. Consulte a administração.");
                         break;
                     }
 
                     if(!clinica.validarProfissionalNodia(profissionalEncontrado, data)){
-                        System.out.println("Este profissional não atende no dia solicitado.");
+                        System.out.println("\nEste profissional não atende no dia solicitado.");
                         break;
                     }
 
@@ -414,7 +414,7 @@ public class Main {
                         clinica.consultas[np] = consulta.agendar(pacienteEncontrado, profissionalEncontrado, data, hora, tipo);
                     }
 
-                    System.out.println("Consulta confirmada e agendada com sucesso!");
+                    System.out.println("\nFirmada e agendada com sucesso!");
                     break;
 
                 case 2:
@@ -434,7 +434,7 @@ public class Main {
                     }
                     
                     if(!consultaCancelamento.status.equals("agendada")){
-                        System.out.println("Não é possível cancelar uma consulta que já foi " + consultaCancelamento.status + ".");
+                        System.out.println("\nNão é possível cancelar uma consulta que já foi " + consultaCancelamento.status + ".");
                         break;
                     }
                     
@@ -453,13 +453,13 @@ public class Main {
                     double multaCancelamento = clinica.calcularMulta(consultaCancelamento.horario, dataCancelamento, horaAtual);
                     
                     if(multaCancelamento > 0){
-                        System.out.println("Multa aplicada: R$ " + multaCancelamento);
+                        System.out.println("\nMulta aplicada: R$ " + multaCancelamento);
                     }else{
-                        System.out.println("Sem multa (cancelamento com mais de 2 horas de antecedência).");
+                        System.out.println("\nSem multa (cancelamento com mais de 2 horas de antecedência).");
                     }
                     
                     consultaCancelamento.cancelar(multaCancelamento, justificativa);
-                    System.out.println("Consulta cancelada com sucesso!");
+                    System.out.println("\nConsulta cancelada com sucesso!");
                     break;
 
                 case 3:
@@ -474,7 +474,7 @@ public class Main {
                     Consultas consultaRemarcar = clinica.consultaBuscaParaRemarcar(cpfRemarcar, dataAtualRemarcar, horarioAtualRemarcar);
                     
                     if(consultaRemarcar == null){
-                        System.out.println("Consulta não encontrada ou não está agendada.");
+                        System.out.println("\nConsulta não encontrada ou não está agendada.");
                         break;
                     }
                     
@@ -490,8 +490,15 @@ public class Main {
                         novoHorario = horarioAtualRemarcar;
                     }
                     
-                    if(clinica.profissionalOcupado(consultaRemarcar.profissional, novaData, novoHorario)){
-                        System.out.println("Horário indisponível para a nova data/hora.");
+                    if (!clinica.validarProfissionalNodia(consultaRemarcar.profissional, novaData)) {
+                        System.out.println("\nO profissional " + consultaRemarcar.profissional.nome + " não atende no dia da semana desta nova data.");
+                        break;
+                    }
+                    
+                    boolean mudouHorario = !novaData.equals(dataAtualRemarcar) || !novoHorario.equals(horarioAtualRemarcar);
+                    
+                    if (mudouHorario && clinica.profissionalOcupado(consultaRemarcar.profissional, novaData, novoHorario)) {
+                        System.out.println("\nHorário indisponível para a nova data/hora.");
                         break;
                     }
                     
@@ -499,7 +506,9 @@ public class Main {
                     
                     int novaConsultaIndex = Clinica.totalConsultas;
                     Consultas novaConsulta = new Consultas(consultaRemarcar.paciente, consultaRemarcar.profissional, novaData, novoHorario, consultaRemarcar.tipo);
+                    
                     clinica.consultas[novaConsultaIndex] = novaConsulta;
+                    Clinica.totalConsultas++;
                     
                     System.out.println("Consulta remarcada com sucesso!");
                     System.out.println("Nova data: " + novaData);
@@ -553,9 +562,9 @@ public class Main {
                         if(opcaoProcedimentos == 1){
                             String procedimento = "";
                             while(!procedimento.equals("sair")){
-                                System.out.print("Digite o procedimento (ou 'sair' para finalizar): ");
+                                System.out.print("Digite o procedimento (ou deixe em branco para finalizar): ");
                                 procedimento = sc.nextLine();
-                                if(!procedimento.equals("sair")){
+                                if(!procedimento.equals(null)){
                                     atendimento.adicionarProcedimento(procedimento);
                                 }
                             }
@@ -575,7 +584,7 @@ public class Main {
                     
                     consultaAtendimento.registrarAtendimento(atendimento);
                     atendimento.exibirResumo();
-                    System.out.println("Atendimento registrado com sucesso!");
+                    System.out.println("\nAtendimento registrado com sucesso!");
                     break;
 
                 case 5:
@@ -628,12 +637,12 @@ public class Main {
                     Consultas consultaPagamento = clinica.consultaBusca(cpfPagamento, dataPagamento, horarioPagamento);
                     
                     if(consultaPagamento == null){
-                        System.out.println("Consulta não encontrada.");
+                        System.out.println("\nConsulta não encontrada.");
                         break;
                     }
                     
                     if(!consultaPagamento.status.equals("realizada")){
-                        System.out.println("Apenas consultas realizadas podem ser pagas.");
+                        System.out.println("\nApenas consultas realizadas podem ser pagas.");
                         break;
                     }
                     
@@ -697,9 +706,8 @@ public class Main {
                     
                     clinica.pagamentos[npag] = pagamentoNovo;
                     Clinica.totalPagamentos++;
-                    
                     pagamentoNovo.exibirResumo();
-                    System.out.println("Pagamento registrado com sucesso!");
+                    System.out.println("\nPagamento registrado com sucesso!");
                     break;
 
                 case 2:
@@ -722,7 +730,7 @@ public class Main {
 
         do {
 
-            System.out.println("\n========== MENU RELATÓRIOS ==========");
+            System.out.println("\nMenu relatórios");
             System.out.println("1 - Relatório Geral de Consultas");
             System.out.println("2 - Relatório por Profissional");
             System.out.println("3 - Relatório por Período");
@@ -735,16 +743,19 @@ public class Main {
             switch(op) {
 
                 case 1:
+                    System.out.println("\n--- Gerar relatório geral de consultas ---\n");
                     relatorios.gerarRelatorioGeral();
                     break;
 
                 case 2:
+                    System.out.println("\n--- Gerar relatório por profissional ---\n");
                     System.out.print("Digite o nome do profissional: ");
                     String nomeProfissional = sc.nextLine();
                     relatorios.gerarRelatorioPorProfissional(nomeProfissional);
                     break;
 
                 case 3:
+                    System.out.println("\n--- Gerar relatório por período ---\n");
                     System.out.print("Digite a data inicial (DD/MM/AAAA): ");
                     String dataInicio = sc.nextLine();
                     System.out.print("Digite a data final (DD/MM/AAAA): ");
@@ -753,6 +764,7 @@ public class Main {
                     break;
 
                 case 4:
+                    System.out.println("\n--- Gerar resumo financeiro ---\n");
                     relatorios.gerarResumoFinanceiro();
                     break;
 

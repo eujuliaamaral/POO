@@ -55,7 +55,7 @@ public class Atendimento {
     }
 
     public void exibirResumo(){
-        System.out.println("\n=== RESUMO DO ATENDIMENTO ===");
+        System.out.println("\n--- Resumo do atendimento ---");
         System.out.println("Observacoes: " + observacoes);
         if(!diagnostico.isEmpty()){
             System.out.println("Diagnostico: " + diagnostico);
@@ -66,6 +66,5 @@ public class Atendimento {
                 System.out.println("  " + (i + 1) + ". " + procedimentos[i]);
             }
         }
-        System.out.println("============================\n");
     }
 }

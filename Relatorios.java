@@ -9,9 +9,8 @@ public class Relatorios {
     }
 
     public void gerarRelatorioGeral(){
-        System.out.println("\n========== RELATÓRIO GERAL DE CONSULTAS ==========");
         if(Clinica.totalConsultas == 0){
-            System.out.println("Nenhuma consulta registrada.");
+            System.out.println("\nNenhuma consulta registrada.");
             return;
         }
         for(int i = 0; i < Clinica.totalConsultas; i++){
@@ -27,11 +26,9 @@ public class Relatorios {
                 }
             }
         }
-        System.out.println("\n===================================================\n");
     }
 
     public void gerarRelatorioPorProfissional(String nomeProfissional){
-        System.out.println("\n========== RELATÓRIO DE CONSULTAS POR PROFISSIONAL ==========");
         boolean encontrou = false;
         for(int i = 0; i < Clinica.totalConsultas; i++){
             if(clinica.consultas[i].profissional.nome.toLowerCase().equals(nomeProfissional.toLowerCase())){
@@ -49,13 +46,11 @@ public class Relatorios {
             }
         }
         if(!encontrou){
-            System.out.printf("Nenhuma consulta encontrada para o profissional: %s\n", nomeProfissional);
+            System.out.printf("\nNenhuma consulta encontrada para o profissional: %s\n", nomeProfissional);
         }
-        System.out.println("\n============================================================\n");
     }
 
     public void gerarRelatorioPorPeriodo(String dataInicio, String dataFim){
-        System.out.println("\n========== RELATÓRIO DE CONSULTAS POR PERÍODO ==========");
         int inicioInt = converterDataParaInt(dataInicio);
         int fimInt = converterDataParaInt(dataFim);
         boolean encontrou = false;
@@ -75,13 +70,11 @@ public class Relatorios {
             }
         }
         if(!encontrou){
-            System.out.printf("Nenhuma consulta encontrada no período de %s a %s\n", dataInicio, dataFim);
+            System.out.printf("\nNenhuma consulta encontrada no período de %s a %s\n", dataInicio, dataFim);
         }
-        System.out.println("\n========================================================\n");
     }
 
     public void gerarResumoFinanceiro(){
-        System.out.println("\n========== RESUMO FINANCEIRO ==========");
         int totalConsultasRealizadas = 0;
         double totalFaturado = 0.0;
         int totalCancelamentos = 0;
@@ -104,7 +97,6 @@ public class Relatorios {
         System.out.printf("Total de cancelamentos: %d\n", totalCancelamentos);
         System.out.printf("Total arrecadado em multas: R$ %.2f\n", totalMultas);
         System.out.printf("Total geral (faturamento + multas): R$ %.2f\n", totalFaturado + totalMultas);
-        System.out.println("\n=====================================\n");
     }
 
     public int converterDataParaInt(String data){
