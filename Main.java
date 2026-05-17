@@ -313,6 +313,8 @@ public class Main {
             System.out.println("2 - Cancelar consulta");
             System.out.println("3 - Remarcar consulta");
             System.out.println("4 - Registrar atendimento");
+            System.out.println("5 - Listar todas as consultas");
+            System.out.println("6 - Buscar consultas por CPF");
             System.out.println("0 - Voltar");
             System.out.print("Opcao: ");
 
@@ -327,10 +329,11 @@ public class Main {
                     Paciente pacienteEncontrado = clinica.pacienteBusca(cpf);
 
                     if(pacienteEncontrado == null){
+                        System.out.println("Paciente não encontrado.");
                         break; 
                     }
                     if(pacienteEncontrado.ativo == false){
-                        System.out.print("\nO cpf esta desativado.\n");
+                        System.out.println("Este paciente está desativado e não pode agendar consultas.");
                         break;
                     }
 
@@ -382,6 +385,16 @@ public class Main {
                                 break;
                             }
                         }
+                    }
+
+                    if(!clinica.validarProfissionalComValor(profissionalEncontrado)){
+                        System.out.println("Este profissional não tem valor de consulta definido. Consulte a administração.");
+                        break;
+                    }
+
+                    if(!clinica.validarProfissionalNodia(profissionalEncontrado, data)){
+                        System.out.println("Este profissional não atende no dia solicitado.");
+                        break;
                     }
 
                     System.out.print("Digite o tipo da consulta (Retorno/Avaliação/Deixe em branco para Inicial): ");
@@ -557,6 +570,18 @@ public class Main {
                     consultaAtendimento.registrarAtendimento(atendimento);
                     atendimento.exibirResumo();
                     System.out.println("Atendimento registrado com sucesso!");
+                    break;
+
+                case 5:
+                    System.out.println("\n--- liistar todas as consultas ---\n");
+                    clinica.listarConsultas();
+                    break;
+
+                case 6:
+                    System.out.println("\n--- buscar consultas por CPF ---\n");
+                    System.out.print("Digite o CPF do paciente: ");
+                    String cpfBuscaConsulta = sc.nextLine();
+                    clinica.listarConsultas(cpfBuscaConsulta);
                     break;
 
                 case 0:

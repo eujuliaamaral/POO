@@ -79,25 +79,44 @@ public class Clinica {
     }
 
     public void listarConsultas(){
-        for(int i = 0; i < totalConsultas; i++){
-            System.out.printf("\n\nPaciente: " + consultas[i].paciente + "\nProfissional: " + consultas[i]. profissional +
-            "\nData: " + consultas[i].data + "\nHorario: " + consultas[i].horario + "\nTipo: " + consultas[i].tipo + "\n");
+        if(totalConsultas == 0){
+            System.out.printf("Nenhuma consulta agendada.\n");
+            return;
         }
-
+        for(int i = 0; i < totalConsultas; i++){
+            System.out.printf("\n--- Consulta %d ---\n", i + 1);
+            System.out.printf("Paciente: " + consultas[i].paciente.nome + "\n");
+            System.out.printf("CPF: " + consultas[i].paciente.cpf + "\n");
+            System.out.printf("Profissional: " + consultas[i].profissional.nome + "\n");
+            System.out.printf("Data: " + consultas[i].data + "\n");
+            System.out.printf("Horario: " + consultas[i].horario + "\n");
+            System.out.printf("Tipo: " + consultas[i].tipo + "\n");
+            System.out.printf("Status: " + consultas[i].status + "\n");
+            if(consultas[i].atendimento != null && !consultas[i].atendimento.diagnostico.isEmpty()){
+                System.out.printf("Diagnostico: " + consultas[i].atendimento.diagnostico + "\n");
+            }
+        }
     }
 
     public void listarConsultas(String cpfP){
         boolean achou = false;
-        for(int i = 0; i <totalConsultas; i++){
+        for(int i = 0; i < totalConsultas; i++){
             if(consultas[i].paciente.cpf.equals(cpfP)){
-                System.out.printf("\n\nPaciente: " + consultas[i].paciente + "\nProfissional: " + consultas[i]. profissional +
-                "\nData: " + consultas[i].data + "\nHorario: " + consultas[i].horario + "\nTipo: " + consultas[i].tipo + "\n");
-            
+                System.out.printf("\n--- Consulta ---\n");
+                System.out.printf("Paciente: " + consultas[i].paciente.nome + "\n");
+                System.out.printf("Profissional: " + consultas[i].profissional.nome + "\n");
+                System.out.printf("Data: " + consultas[i].data + "\n");
+                System.out.printf("Horario: " + consultas[i].horario + "\n");
+                System.out.printf("Tipo: " + consultas[i].tipo + "\n");
+                System.out.printf("Status: " + consultas[i].status + "\n");
+                if(consultas[i].atendimento != null && !consultas[i].atendimento.diagnostico.isEmpty()){
+                    System.out.printf("Diagnostico: " + consultas[i].atendimento.diagnostico + "\n");
+                }
                 achou = true;
             }
         }
         if(!achou){
-        System.out.printf("\nNenhum agendamento encontrado.\n");
+            System.out.printf("\nNenhuma consulta encontrada para este CPF.\n");
         }
     }
 
@@ -207,5 +226,39 @@ public class Clinica {
             }
         }
     }
+    public boolean validarProfissionalComValor(Profissionais prof){
+        return prof.valorConsulta > 0;
+    }
 
+    public boolean validarProfissionalNodia(Profissionais prof, String data){
+        if(prof.diasAtendimento == null || prof.diasAtendimento.length == 0){
+            return false;
+        }
+        int dia = Integer.parseInt(data.substring(0, 2));
+        int mes = Integer.parseInt(data.substring(3, 5));
+        int ano = Integer.parseInt(data.substring(6, 10));
+        
+        int diaSemana = calcularDiaSemana(dia, mes, ano);
+        String[] diasSemana = {"domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"};
+        String diaAtual = diasSemana[diaSemana];
+        
+        for(int i = 0; i < prof.diasAtendimento.length; i++){
+            if(prof.diasAtendimento[i] != null && prof.diasAtendimento[i].toLowerCase().equals(diaAtual.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int calcularDiaSemana(int dia, int mes, int ano){
+        if(mes < 3){
+            mes += 12;
+            ano -= 1;
+        }
+        int k = ano % 100;
+        int j = ano / 100;
+        int h = (dia + ((13 * (mes + 1)) / 5) + k + (k / 4) + (j / 4) - (2 * j)) % 7;
+        int diaSemana = (h + 6) % 7;
+        return diaSemana;
+    }
 }
