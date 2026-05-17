@@ -90,8 +90,8 @@ public class Main {
                     String cpf = sc.nextLine();
                     boolean pacienteDuplicado = false;
                     for(int i = 0; i < Clinica.totalPacientes; i++){
-                        if(clinica.pacientes[i].cpf.equals(cpf)){
-                            System.out.printf("\nCadastro já foi feito!\n");
+                        if(clinica.pacientes[i] != null && clinica.pacientes[i].cpf.equals(cpf)){
+                            System.out.println("\nCadastro já foi feito!");
                             pacienteDuplicado = true;
                             break;
                         }
@@ -99,29 +99,40 @@ public class Main {
                     if(pacienteDuplicado){
                         break;
                     }
-                    System.out.printf("Digite a idade do paciente:");
+                    
+                    System.out.print("Digite a idade do paciente (ou deixe em branco para cadastro rápido):");
                     String idadeTexto = sc.nextLine();
-                    System.out.printf("Digite o telefone do paciente:");
-                    String telefone = sc.nextLine();
-                    System.out.printf("O paciente possui convenio (true ou false):");
-                    boolean convenio = sc.nextBoolean();
-                    sc.nextLine();
-
-                    String tipoconvenio;
-
-                    if (convenio){
-                        System.out.printf("Digite o convenio do paciente:");
-                        tipoconvenio = sc.nextLine();
-                    }else{
-                        tipoconvenio = "Não possui";
-                    }
-
+                    
                     int np = Clinica.totalPacientes;
+                    
                     if(idadeTexto.trim().isEmpty()){
                         clinica.pacientes[np] = paciente.cadastro(nome, cpf);
+                        clinica.pacientes[np].telefone = "Não informado";
+                        clinica.pacientes[np].convenio = false;
+                        clinica.pacientes[np].tipoconvenio = "Não possui";
+                        
+                        System.out.println("\nCadastro rápido realizado com sucesso!");
                     }else{
+                        System.out.print("Digite o telefone do paciente:");
+                        String telefone = sc.nextLine();
+                        
+                        System.out.print("O paciente possui convenio (S/N):");
+                        String temConvenioStr = sc.nextLine();
+                        
+                        boolean convenio = temConvenioStr.equalsIgnoreCase("S");
+                        String tipoconvenio;
+                        
+                        if (convenio){
+                            System.out.print("Digite o convenio do paciente:");
+                            tipoconvenio = sc.nextLine();
+                        }else{
+                            tipoconvenio = "Não possui";
+                        }
+                        
                         int idade = Integer.parseInt(idadeTexto.trim());
                         clinica.pacientes[np] = paciente.cadastro(nome, cpf, idade, telefone, convenio, tipoconvenio);
+                        
+                        System.out.println("\nCadastro completo realizado com sucesso!");
                     }
                     break;
 
@@ -155,11 +166,11 @@ public class Main {
 
                         if(opcaoAtualizar == 1){
                             paciente.cadastroComplementarRapido(pacienteEncontrado);
-                            System.out.println("Cadastro atualizado com sucesso!");
+                            System.out.println("\nCadastro atualizado com sucesso!");
                             
                         }else if (opcaoAtualizar == 2){
                             paciente.cadastroComplementarCompleto(pacienteEncontrado);
-                            System.out.println("Cadastro completado com sucesso!");
+                            System.out.println("\nCadastro completado com sucesso!");
                         }else{
                             System.out.println("Opção inválida.");
                         }
@@ -212,49 +223,61 @@ public class Main {
                     System.out.println("\n--- Cadastrar profissional ---\n");
                     System.out.printf("Digite o nome do profissional:");
                     String nome = sc.nextLine();
-                    System.out.printf("Digite a especialidade(clinica geral, fisioterapia, psicologia e nutrição):");
+                    System.out.printf("Digite a especialidade(clinica geral, fisioterapia, psicologia e nutricao):");
                     String especialidade = sc.nextLine();
+
                     if (!especialidade.equals("clinica geral") && 
-                        !especialidade.equals("fisioterapia") && 
-                        !especialidade.equals("psicologia") &&
-                        !especialidade.equals("nutrição")) {
+                        !especialidade.equals("fisioterapia") &&
+                        !especialidade.equals("psicologia") && 
+                        !especialidade.equals("nutricao")) {
                         
                         System.out.println("Especialidade inválida!");
                         break;
                     }
-                    System.out.printf("Digite o registro profissional:");
+                    System.out.printf("Digite o registro profissional (ou deixe em branco para cadastro rápido):");
                     String registroPro = sc.nextLine();
-                    boolean profissionalDuplicado = false;
-                    for(int i = 0; i < Clinica.totalProfissionais; i++){
-                        if(clinica.profissionais[i].registroPro.equals(registroPro)){
-                            System.out.printf("\nCadastro já foi feito!\n");
-                            profissionalDuplicado = true;
-                            break;
-                        }
-                    }
-                    if(profissionalDuplicado){
-                        break;
-                    }
-                    System.out.printf("Digite o valor da Cosulta:");
-                    double valorConsulta = sc.nextDouble();
-                    sc.nextLine();
-                    System.out.printf("Digite a quantidade de dias de atendimento:");
-                    int l = sc.nextInt();
-                    sc.nextLine();
-
-                    String[] diasAtendimento = new String[l];
-
-                    for(int i = 0; i < l; i++){
-                        System.out.printf("Digite o dia %d:", i + 1);
-                    diasAtendimento[i] = sc.nextLine();
-                    }
 
                     int np = Clinica.totalProfissionais;
 
-                    if(registroPro.trim().isEmpty()){
+                    if(registroPro.isEmpty()){
                         clinica.profissionais[np] = profissional.cadastro(nome, especialidade);
+                        
+                        clinica.profissionais[np].registroPro = "Não informado";
+                        clinica.profissionais[np].valorConsulta = 0.0;
+                        clinica.profissionais[np].diasAtendimento = new String[0];
+                        
+                        System.out.println("\nCadastro rápido de profissional realizado com sucesso!");
                     }else{
+
+                        boolean profissionalDuplicado = false;
+                        for(int i = 0; i < Clinica.totalProfissionais; i++){
+                            if(clinica.profissionais[i] != null && 
+                               clinica.profissionais[i].registroPro != null && 
+                               clinica.profissionais[i].registroPro.equals(registroPro)){
+                                System.out.println("\nCadastro já foi feito com este registro profissional!");
+                                profissionalDuplicado = true;
+                                break;
+                            }
+                        }
+                        if(profissionalDuplicado){
+                            break;
+                        }
+                        System.out.printf("Digite o valor da Cosulta:");
+                        double valorConsulta = sc.nextDouble();
+                        sc.nextLine();
+                        System.out.printf("Digite a quantidade de dias de atendimento:");
+                        int l = sc.nextInt();
+                        sc.nextLine();
+
+                        String[] diasAtendimento = new String[l];
+
+                        for(int i = 0; i < l; i++){
+                            System.out.printf("Digite o dia %d:", i + 1);
+                            diasAtendimento[i] = sc.nextLine();
+                        }
+
                         clinica.profissionais[np] = profissional.cadastro(nome, especialidade, registroPro, valorConsulta, diasAtendimento);
+                        System.out.println("\nCadastro completo de profissional realizado com sucesso!");
                     }
                     break;
 
@@ -288,11 +311,11 @@ public class Main {
 
                         if(opcaoAtualizar == 1){
                             profissional.cadastroComplementarRapido(profissionalEncontrado);
-                            System.out.println("Cadastro atualizado com sucesso!");
+                            System.out.println("\nCadastro atualizado com sucesso!");
                             
                         }else if (opcaoAtualizar == 2){
                             profissional.cadastroComplementarCompleto(profissionalEncontrado);
-                            System.out.println("Cadastro completado com sucesso!");
+                            System.out.println("\nCadastro completado com sucesso!");
                         }else{
                             System.out.println("Opção inválida.");
                         }
@@ -343,26 +366,73 @@ public class Main {
                         System.out.println("Este paciente está desativado e não pode agendar consultas.");
                         break;
                     }
+                    if(pacienteEncontrado.telefone.equals("Não informado")){
+                        System.out.println("\nEste paciente está com o cadastro incompleto e não pode agendar consultas.");
+                        break;
+                    }
 
                     System.out.print("Digite a data da consulta (DD/MM/AAAA): ");
                     String data = sc.nextLine();
                     System.out.print("Digite o horario da consulta (ex: 09:00): ");
                     String hora = sc.nextLine();
+
+                    String[] partesHora = hora.split(":");
+                    int horaInicial = Integer.parseInt(partesHora[0]);
+                    int horaFinal =  Integer.parseInt(partesHora[1]);
+
+                    if(horaFinal < 0 || horaFinal > 59 || horaInicial < 8 || horaInicial > 18){
+                        System.out.print("\nHorário inválido!\n");
+                        break;
+                    }
+                    if(horaInicial == 18 && horaFinal > 60){
+                        System.out.print("\nHorário inválido!\n");
+                        break;
+                    }
+
                     System.out.print("Sabe o nome do profissional? (S/N): ");
                     String sabeNome = sc.nextLine();
                     Profissionais profissionalEncontrado = null;
 
-                    if(sabeNome.equals("N")){
+                    if(sabeNome.trim().equalsIgnoreCase("N")){
                         System.out.print("Digite a especialidade necessária (ex: Psicologia): ");
                         String esp = sc.nextLine();
                         
                         profissionalEncontrado = clinica.profissionaisBuscaEsp(esp, data, hora);
                         
                         if(profissionalEncontrado == null){
-                            System.out.println("Nenhum profissional desta especialidade livre neste horário!");
-                            break;
+                            
+                            for(int i = 0; i < Clinica.totalProfissionais; i++) {
+                                if(clinica.profissionais[i].especialidade.trim().equalsIgnoreCase(esp.trim())) {
+                                    profissionalEncontrado = clinica.profissionais[i];
+                                    break;
+                                }
+                            }
+                            
+                            if(profissionalEncontrado == null) {
+                                System.out.println("\nNenhum profissional cadastrado para esta especialidade!");
+                                break;
+                            }
+                            
+                            System.out.println("\nO profissional de " + esp + " (" + profissionalEncontrado.nome + ") já está ocupado às " + hora);
+                            
+                            String sugestao = clinica.horarioOcupado(profissionalEncontrado, data, hora);
+                            if(sugestao != null){
+                                System.out.print("Deseja agendar com " + profissionalEncontrado.nome + " para o horário sugerido de às " + sugestao + "? (S/N): ");
+                                String aceitou = sc.nextLine();
+                                if(aceitou.trim().equalsIgnoreCase("S")){
+                                    hora = sugestao;
+                                } else {
+                                    System.out.println("\nAgendamento cancelado.");
+                                    break;
+                                }
+                            } else {
+                                System.out.println("\nNão há outros horários disponíveis para este profissional hoje.");
+                                break;
+                            }
+                        
+                        } else {
+                            System.out.println("Profissional disponível encontrado: " + profissionalEncontrado.nome);
                         }
-                        System.out.println("Profissional disponível encontrado: " + profissionalEncontrado.nome);
                         
                     }else{
                         System.out.print("Digite o nome exato do profissional: ");
@@ -371,21 +441,21 @@ public class Main {
                         profissionalEncontrado = clinica.profissionaisBusca(nome, data, hora);
                         
                         if(profissionalEncontrado == null){
-                            System.out.println("Profissional não encontrado no sistema.");
+                            System.out.println("\nProfissional não encontrado no sistema.");
                             break;
                         }
 
                         if(clinica.profissionalOcupado(profissionalEncontrado, data, hora)){
                             System.out.println("Aviso: " + profissionalEncontrado.nome + " já está ocupado às " + hora);
                             
-                            String sugestao = clinica.horarioOcupado(profissionalEncontrado, data);
+                            String sugestao = clinica.horarioOcupado(profissionalEncontrado, data, hora);
                             if(sugestao != null){
                                 System.out.print("Deseja agendar para o horário sugerido de às " + sugestao + "? (S/N): ");
                                 String aceitou = sc.nextLine();
                                 if(aceitou.equals("S")){
                                     hora = sugestao;
                                 }else{
-                                    System.out.println("Agendamento cancelado.");
+                                    System.out.println("\nAgendamento cancelado.");
                                     break;
                                 }
                             }else{
@@ -443,7 +513,7 @@ public class Main {
                     String temJustificativa = sc.nextLine();
                     String justificativa = "";
                     
-                    if(temJustificativa.equals("S") || temJustificativa.equals("s")){
+                    if(temJustificativa.trim().equalsIgnoreCase("S")){
                         System.out.print("Digite a justificativa: ");
                         justificativa = sc.nextLine();
                     }
@@ -452,10 +522,14 @@ public class Main {
                     String horaAtual = sc.nextLine();
                     
                     double multaCancelamento = clinica.calcularMulta(consultaCancelamento.horario, dataCancelamento, horaAtual);
+                    if (!justificativa.trim().isEmpty()) {
+                        multaCancelamento = 0.0;
+                        System.out.println("\nJustificativa apresentada. Multa ISENTA pelo sistema!");
+                    }
                     
                     if(multaCancelamento > 0){
-                        System.out.println("\nMulta aplicada: R$ " + multaCancelamento);
-                    }else{
+                        System.out.println("Multa aplicada: R$ " + multaCancelamento);
+                    } else if (justificativa.trim().isEmpty()) { 
                         System.out.println("\nSem multa (cancelamento com mais de 2 horas de antecedência).");
                     }
                     
@@ -511,7 +585,7 @@ public class Main {
                     clinica.consultas[novaConsultaIndex] = novaConsulta;
                     Clinica.totalConsultas++;
                     
-                    System.out.println("Consulta remarcada com sucesso!");
+                    System.out.println("\nConsulta remarcada com sucesso!");
                     System.out.println("Nova data: " + novaData);
                     System.out.println("Novo horário: " + novoHorario);
                     break;
@@ -647,16 +721,21 @@ public class Main {
                         break;
                     }
                     
+                    System.out.print("Digite o método de pagamento (dinheiro/cartao/convenio): ");
+                    String metodo = sc.nextLine();
+                    
+                    double valorBaseConsulta = consultaPagamento.profissional.valorConsulta;
+                    int npag = Clinica.totalPagamentos;
+                    Pagamentos pagamentoNovo = new Pagamentos(consultaPagamento, valorBaseConsulta, metodo);
+                    
                     System.out.print("Deseja usar cálculo automático? (S/N): ");
                     String automatico = sc.nextLine();
                     
-                    double valorFinal = consultaPagamento.profissional.valorConsulta;
-                    
-                    if(automatico.equals("S") || automatico.equals("s")){
+                    if(automatico.trim().equalsIgnoreCase("S")){
                         double desconto = 0.0;
                         double convenio = 0.0;
                         
-                        if(consultaPagamento.tipo.equals("retorno") || consultaPagamento.tipo.equals("Retorno")){
+                        if(consultaPagamento.tipo.trim().equalsIgnoreCase("retorno")){
                             desconto = 20.0;
                         }
                         
@@ -664,37 +743,17 @@ public class Main {
                             convenio = 40.0;
                         }
                         
-                        if(desconto > 0 && convenio > 0){
-                            valorFinal = consultaPagamento.profissional.valorConsulta;
-                            double descontoValor = valorFinal * (desconto / 100.0);
-                            double convenioValor = consultaPagamento.profissional.valorConsulta * (convenio / 100.0);
-                            valorFinal = valorFinal - descontoValor - convenioValor;
-                        }else if(desconto > 0){
-                            valorFinal = consultaPagamento.profissional.valorConsulta * (1 - desconto / 100.0);
-                        }else if(convenio > 0){
-                            valorFinal = consultaPagamento.profissional.valorConsulta * (1 - convenio / 100.0);
-                        }
+                        pagamentoNovo.calcularComDescontoConvenioEMulta(desconto, convenio, consultaPagamento.multa);
                         
-                        if(consultaPagamento.multa > 0){
-                            valorFinal = valorFinal + consultaPagamento.multa;
-                        }
-                        
-                        if(valorFinal < 0){
-                            valorFinal = 0.0;
-                        }
-                    }else{
-                        System.out.print("Digite o valor a pagar: R$ ");
-                        valorFinal = sc.nextDouble();
+                    } else {
+                        System.out.print("Digite o valor final a pagar: R$ ");
+                        double valorManual = sc.nextDouble();
                         sc.nextLine();
+                        pagamentoNovo.valorFinal = valorManual;
+                        pagamentoNovo.valorParcela = valorManual;
                     }
                     
-                    System.out.print("Digite o método de pagamento (dinheiro/cartao/convenio): ");
-                    String metodo = sc.nextLine();
-                    
-                    int npag = Clinica.totalPagamentos;
-                    Pagamentos pagamentoNovo = new Pagamentos(consultaPagamento, valorFinal, metodo);
-                    
-                    if(metodo.equals("cartao") || metodo.equals("cartão")){
+                    if(metodo.trim().equalsIgnoreCase("cartao") || metodo.trim().equalsIgnoreCase("cartão")){
                         System.out.print("Digite o número de parcelas (1-3): ");
                         int parcelas = sc.nextInt();
                         sc.nextLine();
