@@ -1,104 +1,161 @@
-#  Sistema de Gerenciamento de Clínica de Consultas
+# Clínica VidaPlena - Sistema de Gerenciamento
 
-Um sistema em Java desenvolvido com **Programação Orientada a Objetos (POO)** para gerenciar consultas, pacientes, profissionais de saúde e pagamentos em uma clínica.
+Um sistema em Java desenvolvido com **Programação Orientada a Objetos** para gerenciar consultas, pacientes, profissionais de saúde, pagamentos e relatórios em uma clínica multidisciplinar.
 
- ** Projeto Educacional**  
- Este é um projeto desenvolvido para a disciplina de **Programação Orientada a Objetos**, com o objetivo de demonstrar os princípios e conceitos fundamentais de POO em Java.
+## 📋 Sobre o Projeto
 
-##  Funcionalidades
+A **Clínica VidaPlena** é uma clínica multidisciplinar que atende nas áreas de:
+- Clínica Geral
+- Fisioterapia
+- Psicologia
+- Nutrição
 
--  Gerenciamento de Pacientes
-  - Cadastro de novos pacientes
-  - Registro de informações pessoais (nome, CPF, idade, telefone)
-  - Suporte a convênios médicos
-  - Ativação/desativação de pacientes
+**Este é um projeto educacional** desenvolvido para a disciplina de Programação Orientada a Objetos, demonstrando os conceitos fundamentais de POO em Java.
 
--  Gerenciamento de Profissionais
-  - Cadastro de profissionais de saúde
-  - Registro de especialidades
-  - Definição de valores de consultas
-  - Configuração de dias de atendimento
+## Conceitos de POO Aplicados
 
-- Agendamento de Consultas
-  - Agendar consultas com pacientes e profissionais
-  - Registro de data e horário
-  - Tipos de consultas (inicial ou acompanhamento)
-  - Cancelamento de consultas com multa e justificativa
-  - Remarcação de consultas
-  - Registro de atendimento na consulta
+- **Sobrecarga de construtores** (≥4 classes obrigatoriamente)
+- **Sobrecarga de métodos** (≥4 classes obrigatoriamente)
+- **Estruturas de decisão e repetição** (if/else, for, while)
+- **Arrays com tamanho fixo** e variáveis contadoras
+- **Métodos com e sem retorno**
 
-- Registro de Atendimento
-  - Observações durante a consulta
-  - Registro de diagnóstico
-  - Documentação de procedimentos realizados
-  - Adição individual ou múltipla de procedimentos
-  - Resumo do atendimento realizado
+## Restrições e Conformidades
 
--  Gerenciamento de Pagamentos
-  - Registro e controle de pagamentos
-  - Suporte a diferentes formas de pagamento
+O projeto segue rigorosamente as seguintes restrições:
+- **Sem herança, classes abstratas ou interfaces**
+- **Sem sobrescrita ou ligação dinâmica**
+- **Sem Collections** (ArrayList, HashMap, etc.)
+- **Sem exceções** tratadas com try/catch
+- **Sem encapsulamento com getters/setters** - todos os atributos são públicos
+- **Sem frameworks ou bibliotecas externas**
+- **Todos os atributos são públicos** (sem private)
+- **Scanner para entrada de dados** no console
+- **Datas em formato texto** "DD/MM/AAAA" com .equals()
 
--  Relatórios
-  - Geração de relatórios gerais de consultas
-  - Relatório filtrado por profissional
-  - Relatório filtrado por período de datas
-  - Resumo financeiro (faturamento, cancelamentos, multas)
-  - Visualização de informações de pacientes, profissionais e atendimentos
+## Funcionalidades Principais
 
-##  Como Usar
+### Gerenciamento de Pacientes
+- Cadastro com dados mínimos (nome e CPF) ou dados completos
+- Complementação de dados em etapas (idade, telefone, convênio)
+- Ativação/desativação de pacientes
+- Listagem e busca de pacientes por CPF
+- Validação de duplicação por CPF
+
+### Gerenciamento de Profissionais
+- Cadastro de profissionais com especialidade validada
+- Especialidades aceitas: Clínica Geral, Fisioterapia, Psicologia, Nutrição
+- Registro profissional e valor de consulta
+- Configuração de dias de atendimento (segunda a sexta)
+- Listagem e filtro por especialidade
+- Bloqueio de agendamentos para profissionais sem valor definido
+
+### Agendamento de Consultas
+- Agendamento com paciente, profissional, data e horário
+- Tipos de consulta: "inicial", "retorno", "avaliação"
+- Busca automática de profissional por especialidade e disponibilidade
+- Validação de conflitos de horário
+- Sugestão automática de próximo horário livre (de hora em hora, 08h-18h)
+- Verificação de disponibilidade do profissional no dia da semana
+
+### Registro de Atendimento
+Três formas de registro:
+1. **Simples**: apenas observações gerais
+2. **Intermediário**: observações + diagnóstico
+3. **Completo**: observações + diagnóstico + procedimentos (até 10)
+
+Procedimentos podem ser adicionados um por vez ou vários simultaneamente.
+Ao registrar, a consulta é marcada automaticamente como realizada.
+
+### Cancelamento de Consultas
+- Cancelamento simples (sem multa)
+- Cancelamento com justificativa
+- **Multa automática de R$ 50,00** para cancelamentos com menos de 2 horas de antecedência
+- Histórico com justificativa do cancelamento
+
+### Remarcação de Consultas
+- Remarcação no mesmo dia (novo horário)
+- Remarcação para data diferente
+- Validação de disponibilidade do profissional no novo dia
+
+### Gerenciamento de Pagamentos
+Formas de pagamento aceitas: dinheiro, cartão, convênio
+
+**Cálculo automático com:**
+- Desconto de retorno: **20%** do valor base
+- Cobertura de convênio: **40%** do valor base
+- Multas pendentes de cancelamentos
+- Parcelamento em até 3 vezes (cartão apenas, sem juros)
+- Mínimo nunca negativo (0 é o piso)
+
+**Três formas de cálculo:**
+1. Sem considerar nada extra
+2. Considerando apenas desconto
+3. Considerando desconto e multa
+
+### Relatórios
+- **Relatório Geral**: todas as consultas com paciente, profissional, data, hora, tipo, status e diagnóstico
+- **Filtro por Profissional**: consultas de um profissional específico
+- **Filtro por Período**: consultas dentro de um intervalo de datas
+- **Resumo Financeiro**: total de atendimentos, faturamento total, quantidade de cancelamentos e total arrecadado em multas
+
+## Como Usar
 
 ### Requisitos
 - Java 8 ou superior instalado
 
-### Executar o Programa
+### Compilar e Executar
 ```bash
 javac *.java
 java Main
 ```
 
 ### Menu Principal
-Ao iniciar, o programa exibirá um menu com as seguintes opções:
-1. **Pacientes** - Gerenciar dados de pacientes
+O sistema oferece as seguintes opções:
+1. **Pacientes** - Gerenciar cadastro de pacientes
 2. **Profissionais** - Gerenciar profissionais de saúde
-3. **Consultas** - Agendar consultas
-4. **Pagamentos** - Gerenciar pagamentos
-5. **Relatórios** - Visualizar relatórios do sistema
+3. **Consultas** - Agendar, cancelar, remarcar e registrar consultas
+4. **Pagamentos** - Registrar e listar pagamentos
+5. **Relatórios** - Gerar relatórios do sistema
 0. **Sair** - Encerrar o programa
 
-##  Exemplo de Uso
+## Jornadas de Usuário Principais
 
-### Cadastrar um Paciente
-- Selecione a opção "1 - Pacientes"
-- Escolha cadastrar novo paciente
-- Preencha as informações solicitadas (nome, CPF, idade, telefone, convênio)
+### 1. Cadastro Rápido e Complementação de Paciente
+Ana registra apenas nome e CPF. Mais tarde, complementa com idade, telefone e dados do convênio.
 
-### Cadastrar um Profissional
-- Selecione a opção "2 - Profissionais"
-- Escolha cadastrar novo profissional
-- Informe nome, especialidade, valor da consulta e dias de atendimento
+### 2. Cadastro Completo de Paciente
+Ana realiza cadastro completo (nome, CPF, idade, telefone, convênio) em uma única operação.
 
-### Agendar uma Consulta
-- Selecione a opção "3 - Consultas"
-- Escolha agendar nova consulta
-- Informe o paciente, profissional, data e horário desejados
-- O sistema verificará disponibilidade do profissional
+### 3. Tentativa de Duplicação
+Ao tentar cadastrar um paciente com CPF já registrado, o sistema recusa a operação.
 
-### Cancelar ou Remarcar uma Consulta
-- Na seção de Consultas, selecione a opção para cancelar ou remarcar
-- Para cancelamento, informe o valor da multa e justificativa
-- Para remarcação, escolha nova data e horário
+### 4. Cadastro e Atualização de Profissional
+Profissional é cadastrado com dados mínimos, depois atualizado com registro profissional, valor de consulta e dias de atendimento.
 
-### Registrar Atendimento
-- Durante uma consulta, você pode registrar:
-  - Observações do paciente
-  - Diagnóstico do profissional
-  - Procedimentos realizados (um ou vários)
-  - Visualizar resumo completo do atendimento
+### 5. Agendamento com Busca Automática de Profissional
+Paciente fornece apenas especialidade, data e horário; o sistema busca automaticamente um profissional disponível.
 
-### Gerenciar Pagamentos
-- Selecione a opção "4 - Pagamentos"
-- Registre pagamentos de consultas
-- Informe a forma de pagamento e valor
+### 6. Agendamento com Conflito e Sugestão de Horário
+Ao detectar conflito de horário, o sistema sugere automaticamente o próximo horário livre naquele dia.
+
+### 7. Atendimento Simples
+Profissional registra apenas observações gerais durante o atendimento.
+
+### 8. Atendimento Completo
+Profissional registra observações, diagnóstico e múltiplos procedimentos.
+
+### 9. Cancelamento sem Multa
+Cancelamento com mais de 2 horas de antecedência - sem multa aplicada.
+
+### 10. Cancelamento com Multa
+Cancelamento com menos de 2 horas - multa de R$ 50,00 aplicada automaticamente.
+
+### 11. Pagamento Automático com Desconto e Convênio
+Sistema calcula automaticamente desconto de retorno (20%) e cobertura de convênio (40%).
+
+### 12. Desativação e Tentativa de Agendamento
+Paciente inativo não pode agendar novas consultas.
 
 ### Visualizar Relatórios
 - Selecione a opção "5 - Relatórios"
