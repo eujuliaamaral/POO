@@ -2,7 +2,7 @@
 
 Um sistema em Java desenvolvido com **Programação Orientada a Objetos** para gerenciar consultas, pacientes, profissionais de saúde, pagamentos e relatórios em uma clínica multidisciplinar.
 
-## 📋 Sobre o Projeto
+##  Sobre o Projeto
 
 A **Clínica VidaPlena** é uma clínica multidisciplinar que atende nas áreas de:
 - Clínica Geral
