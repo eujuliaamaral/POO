@@ -8,6 +8,7 @@ public class Main {
     public static Paciente paciente = new Paciente();
     public static Profissionais profissional = new Profissionais();
     public static Pagamentos pagamento = new Pagamentos();
+    public static Relatorios relatorios = new Relatorios(clinica);
     
     public static void main(String[] args) {
 
@@ -21,6 +22,7 @@ public class Main {
             System.out.println("2 - Profissionais");
             System.out.println("3 - Consultas");
             System.out.println("4 - Pagamentos");
+            System.out.println("5 - Relatórios");
             System.out.println("0 - Sair");
             System.out.print("Opcao: ");
 
@@ -42,6 +44,10 @@ public class Main {
 
                 case 4:
                     menuPagamentos();
+                    break;
+
+                case 5:
+                    menuRelatorios();
                     break;
 
                 case 0:
@@ -699,6 +705,55 @@ public class Main {
                 case 2:
                     System.out.println("\n--- Listar pagamentos ---\n");
                     clinica.listarPagamentos();
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    System.out.println("Opcao invalida.");
+            }
+
+        } while(op != 0);
+    }
+
+    public static void menuRelatorios(){
+        int op;
+
+        do {
+
+            System.out.println("\n========== MENU RELATÓRIOS ==========");
+            System.out.println("1 - Relatório Geral de Consultas");
+            System.out.println("2 - Relatório por Profissional");
+            System.out.println("3 - Relatório por Período");
+            System.out.println("4 - Resumo Financeiro");
+            System.out.println("0 - Voltar");
+            System.out.print("Opcao: ");
+
+            op = lerInt();
+
+            switch(op) {
+
+                case 1:
+                    relatorios.gerarRelatorioGeral();
+                    break;
+
+                case 2:
+                    System.out.print("Digite o nome do profissional: ");
+                    String nomeProfissional = sc.nextLine();
+                    relatorios.gerarRelatorioPorProfissional(nomeProfissional);
+                    break;
+
+                case 3:
+                    System.out.print("Digite a data inicial (DD/MM/AAAA): ");
+                    String dataInicio = sc.nextLine();
+                    System.out.print("Digite a data final (DD/MM/AAAA): ");
+                    String dataFim = sc.nextLine();
+                    relatorios.gerarRelatorioPorPeriodo(dataInicio, dataFim);
+                    break;
+
+                case 4:
+                    relatorios.gerarResumoFinanceiro();
                     break;
 
                 case 0:
