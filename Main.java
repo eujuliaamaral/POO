@@ -311,6 +311,7 @@ public class Main {
             System.out.println("1 - Agendar consulta");
             System.out.println("2 - Cancelar consulta");
             System.out.println("3 - Remarcar consulta");
+            System.out.println("4 - Registrar atendimento");
             System.out.println("0 - Voltar");
             System.out.print("Opcao: ");
 
@@ -483,6 +484,78 @@ public class Main {
                     System.out.println("Consulta remarcada com sucesso!");
                     System.out.println("Nova data: " + novaData);
                     System.out.println("Novo horário: " + novoHorario);
+                    break;
+
+                case 4:
+                    System.out.println("\n--- Registrar atendimento ---\n");
+                    System.out.print("Digite o CPF do paciente: ");
+                    String cpfAtendimento = sc.nextLine();
+                    System.out.print("Digite a data da consulta (DD/MM/AAAA): ");
+                    String dataAtendimento = sc.nextLine();
+                    System.out.print("Digite o horario da consulta (ex: 09:00): ");
+                    String horarioAtendimento = sc.nextLine();
+                    
+                    Consultas consultaAtendimento = clinica.consultaBuscaParaAtendimento(cpfAtendimento, dataAtendimento, horarioAtendimento);
+                    
+                    if(consultaAtendimento == null){
+                        System.out.println("Consulta não encontrada ou não está agendada.");
+                        break;
+                    }
+                    
+                    System.out.print("Digite as observacoes do atendimento: ");
+                    String observacoes = sc.nextLine();
+                    
+                    System.out.print("Deseja registrar diagnóstico? (S/N): ");
+                    String temDiagnostico = sc.nextLine();
+                    String diagnostico = "";
+                    
+                    if(temDiagnostico.equals("S") || temDiagnostico.equals("s")){
+                        System.out.print("Digite o diagnóstico: ");
+                        diagnostico = sc.nextLine();
+                    }
+                    
+                    Atendimento atendimento = null;
+                    
+                    if(diagnostico.isEmpty()){
+                        atendimento = new Atendimento(observacoes);
+                    }else{
+                        atendimento = new Atendimento(observacoes, diagnostico);
+                    }
+                    
+                    System.out.print("Deseja registrar procedimentos? (S/N): ");
+                    String temProcedimentos = sc.nextLine();
+                    
+                    if(temProcedimentos.equals("S") || temProcedimentos.equals("s")){
+                        System.out.print("Registrar um procedimento por vez (1) ou vários de uma vez (2)? ");
+                        int opcaoProcedimentos = sc.nextInt();
+                        sc.nextLine();
+                        
+                        if(opcaoProcedimentos == 1){
+                            String procedimento = "";
+                            while(!procedimento.equals("sair")){
+                                System.out.print("Digite o procedimento (ou 'sair' para finalizar): ");
+                                procedimento = sc.nextLine();
+                                if(!procedimento.equals("sair")){
+                                    atendimento.adicionarProcedimento(procedimento);
+                                }
+                            }
+                        }else if(opcaoProcedimentos == 2){
+                            System.out.print("Digite a quantidade de procedimentos: ");
+                            int qtdProc = sc.nextInt();
+                            sc.nextLine();
+                            
+                            String[] procs = new String[qtdProc];
+                            for(int i = 0; i < qtdProc; i++){
+                                System.out.print("Digite o procedimento " + (i + 1) + ": ");
+                                procs[i] = sc.nextLine();
+                            }
+                            atendimento.adicionarMultiplosProcedimentos(procs);
+                        }
+                    }
+                    
+                    consultaAtendimento.registrarAtendimento(atendimento);
+                    atendimento.exibirResumo();
+                    System.out.println("Atendimento registrado com sucesso!");
                     break;
 
                 case 0:
