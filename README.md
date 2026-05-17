@@ -23,11 +23,16 @@ Um sistema em Java desenvolvido com **Programação Orientada a Objetos (POO)** 
   - Agendar consultas com pacientes e profissionais
   - Registro de data e horário
   - Tipos de consultas (inicial ou acompanhamento)
+  - Cancelamento de consultas com multa e justificativa
+  - Remarcação de consultas
+  - Registro de atendimento na consulta
 
 - Registro de Atendimento
   - Observações durante a consulta
   - Registro de diagnóstico
   - Documentação de procedimentos realizados
+  - Adição individual ou múltipla de procedimentos
+  - Resumo do atendimento realizado
 
 -  Gerenciamento de Pagamentos
   - Registro e controle de pagamentos
@@ -35,8 +40,10 @@ Um sistema em Java desenvolvido com **Programação Orientada a Objetos (POO)** 
 
 -  Relatórios
   - Geração de relatórios gerais de consultas
+  - Relatório filtrado por profissional
+  - Relatório filtrado por período de datas
+  - Resumo financeiro (faturamento, cancelamentos, multas)
   - Visualização de informações de pacientes, profissionais e atendimentos
-  - Filtros e estatísticas do sistema
 
 ##  Como Usar
 
@@ -76,11 +83,17 @@ Ao iniciar, o programa exibirá um menu com as seguintes opções:
 - Informe o paciente, profissional, data e horário desejados
 - O sistema verificará disponibilidade do profissional
 
+### Cancelar ou Remarcar uma Consulta
+- Na seção de Consultas, selecione a opção para cancelar ou remarcar
+- Para cancelamento, informe o valor da multa e justificativa
+- Para remarcação, escolha nova data e horário
+
 ### Registrar Atendimento
 - Durante uma consulta, você pode registrar:
   - Observações do paciente
   - Diagnóstico do profissional
-  - Procedimentos realizados
+  - Procedimentos realizados (um ou vários)
+  - Visualizar resumo completo do atendimento
 
 ### Gerenciar Pagamentos
 - Selecione a opção "4 - Pagamentos"
@@ -89,8 +102,11 @@ Ao iniciar, o programa exibirá um menu com as seguintes opções:
 
 ### Visualizar Relatórios
 - Selecione a opção "5 - Relatórios"
-- Visualize todas as consultas cadastradas
-- Verifique informações de pacientes, profissionais e atendimentos
+- Opções disponíveis:
+  - **Relatório Geral**: Todas as consultas cadastradas
+  - **Relatório por Profissional**: Consultas de um profissional específico
+  - **Relatório por Período**: Consultas entre duas datas
+  - **Resumo Financeiro**: Total de faturamento, cancelamentos e multas
 
 ##  Autores
 Davi Medeiros Dantas Soares 
