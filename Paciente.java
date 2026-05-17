@@ -49,7 +49,6 @@ public class Paciente {
         scanner.nextLine();
         System.out.printf("Digite o telefone do paciente:");
         paciente.telefone = scanner.nextLine();
-        scanner.nextLine();
         System.out.printf("O paciente possui convenio (true ou false):");
         paciente.convenio = scanner.nextBoolean();
         scanner.nextLine();
@@ -58,7 +57,7 @@ public class Paciente {
             System.out.printf("Digite o convenio do paciente:");
             paciente.tipoconvenio = scanner.nextLine();
         }else{
-            paciente.tipoconvenio = "Não possui";
+            paciente.tipoconvenio = "NÃ£o possui";
         }
 
         return paciente;

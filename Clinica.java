@@ -32,7 +32,7 @@ public class Clinica {
     public Profissionais profissionaisBusca(String nome, String data, String horario){
         for(int i = 0; i < totalProfissionais; i++){
             if(profissionais[i].nome.equals(nome)){
-                if(!profissionalOcupado(profissionais[i], data, horario)){
+                if(profissionais[i].nome.trim().equalsIgnoreCase(nome.trim())){
                     return profissionais[i];
                 }
             }
@@ -60,8 +60,12 @@ public class Clinica {
         return false;
     }
 
-    public String horarioOcupado(Profissionais profissional, String data){
-        for(int i = 8; i < 18; i++){
+    public String horarioOcupado(Profissionais profissional, String data, String horario){
+            
+        String[] partes = horario.split(":");
+        int horaInicial = Integer.parseInt(partes[0]);
+        
+        for(int i = horaInicial + 1; i < 18; i++){
             String horariofinal;
 
             if(i < 10){
@@ -149,7 +153,9 @@ public class Clinica {
             System.out.printf("Nenhum profissional cadastrado.\n");
         }else{
             for(int i = 0; i < Clinica.totalProfissionais; i++){
-                System.out.printf("\n\nNome: " + profissionais[i].nome + "\nEspecialidade: " + profissionais[i].especialidade + "\nRegistro Profissional: " + profissionais[i].registroPro + "\n");
+                String diasFormatados = String.join(", ", profissionais[i].diasAtendimento);
+                System.out.printf("\n\nNome: " + profissionais[i].nome + "\nEspecialidade: " + profissionais[i].especialidade + "\nRegistro Profissional: " + profissionais[i].registroPro + 
+                "\nValor da Consulta:" + profissionais[i].valorConsulta + "\nDias de Atendimento:" + diasFormatados +"\n");
             }
         }
     }
