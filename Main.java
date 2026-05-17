@@ -7,6 +7,7 @@ public class Main {
     public static Consultas consulta = new Consultas();
     public static Paciente paciente = new Paciente();
     public static Profissionais profissional = new Profissionais();
+    public static Pagamentos pagamento = new Pagamentos();
     
     public static void main(String[] args) {
 
@@ -574,7 +575,7 @@ public class Main {
 
         do {
 
-            System.out.println("Menu Pagamentos");
+            System.out.println("\nMenu Pagamentos");
             System.out.println("1 - Registrar pagamento");
             System.out.println("2 - Listar pagamentos");
             System.out.println("0 - Voltar");
@@ -585,11 +586,94 @@ public class Main {
             switch(op) {
 
                 case 1:
-                    System.out.println("--- Registrar pagamento ---");
+                    System.out.println("\n--- Registrar pagamento ---\n");
+                    System.out.print("Digite o CPF do paciente: ");
+                    String cpfPagamento = sc.nextLine();
+                    System.out.print("Digite a data da consulta (DD/MM/AAAA): ");
+                    String dataPagamento = sc.nextLine();
+                    System.out.print("Digite o horario da consulta (ex: 09:00): ");
+                    String horarioPagamento = sc.nextLine();
+                    
+                    Consultas consultaPagamento = clinica.consultaBusca(cpfPagamento, dataPagamento, horarioPagamento);
+                    
+                    if(consultaPagamento == null){
+                        System.out.println("Consulta não encontrada.");
+                        break;
+                    }
+                    
+                    if(!consultaPagamento.status.equals("realizada")){
+                        System.out.println("Apenas consultas realizadas podem ser pagas.");
+                        break;
+                    }
+                    
+                    System.out.print("Deseja usar cálculo automático? (S/N): ");
+                    String automatico = sc.nextLine();
+                    
+                    double valorFinal = consultaPagamento.profissional.valorConsulta;
+                    
+                    if(automatico.equals("S") || automatico.equals("s")){
+                        double desconto = 0.0;
+                        double convenio = 0.0;
+                        
+                        if(consultaPagamento.tipo.equals("retorno") || consultaPagamento.tipo.equals("Retorno")){
+                            desconto = 20.0;
+                        }
+                        
+                        if(consultaPagamento.paciente.convenio){
+                            convenio = 40.0;
+                        }
+                        
+                        if(desconto > 0 && convenio > 0){
+                            valorFinal = consultaPagamento.profissional.valorConsulta;
+                            double descontoValor = valorFinal * (desconto / 100.0);
+                            double convenioValor = consultaPagamento.profissional.valorConsulta * (convenio / 100.0);
+                            valorFinal = valorFinal - descontoValor - convenioValor;
+                        }else if(desconto > 0){
+                            valorFinal = consultaPagamento.profissional.valorConsulta * (1 - desconto / 100.0);
+                        }else if(convenio > 0){
+                            valorFinal = consultaPagamento.profissional.valorConsulta * (1 - convenio / 100.0);
+                        }
+                        
+                        if(consultaPagamento.multa > 0){
+                            valorFinal = valorFinal + consultaPagamento.multa;
+                        }
+                        
+                        if(valorFinal < 0){
+                            valorFinal = 0.0;
+                        }
+                    }else{
+                        System.out.print("Digite o valor a pagar: R$ ");
+                        valorFinal = sc.nextDouble();
+                        sc.nextLine();
+                    }
+                    
+                    System.out.print("Digite o método de pagamento (dinheiro/cartao/convenio): ");
+                    String metodo = sc.nextLine();
+                    
+                    int npag = Clinica.totalPagamentos;
+                    Pagamentos pagamentoNovo = new Pagamentos(consultaPagamento, valorFinal, metodo);
+                    
+                    if(metodo.equals("cartao") || metodo.equals("cartão")){
+                        System.out.print("Digite o número de parcelas (1-3): ");
+                        int parcelas = sc.nextInt();
+                        sc.nextLine();
+                        pagamentoNovo.parcelar(parcelas);
+                    }
+                    
+                    System.out.print("Digite a data do pagamento (DD/MM/AAAA): ");
+                    String dataEfetuado = sc.nextLine();
+                    pagamentoNovo.efetuarPagamento(dataEfetuado);
+                    
+                    clinica.pagamentos[npag] = pagamentoNovo;
+                    Clinica.totalPagamentos++;
+                    
+                    pagamentoNovo.exibirResumo();
+                    System.out.println("Pagamento registrado com sucesso!");
                     break;
 
                 case 2:
-                    System.out.println("--- Listar pagamentos ---");
+                    System.out.println("\n--- Listar pagamentos ---\n");
+                    clinica.listarPagamentos();
                     break;
 
                 case 0:

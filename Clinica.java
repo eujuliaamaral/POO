@@ -2,10 +2,12 @@ public class Clinica {
     Paciente[] pacientes = new Paciente[100];
     Profissionais[] profissionais = new Profissionais[100];
     Consultas[] consultas = new Consultas[200];
+    Pagamentos[] pagamentos = new Pagamentos[200];
 
     public static int totalPacientes = 0;
     public static int totalProfissionais = 0;
     public static int totalConsultas = 0;
+    public static int totalPagamentos = 0;
 
     public Paciente pacienteBusca(String cpf){
         for(int i = 0; i < totalPacientes; i++){
@@ -189,6 +191,21 @@ public class Clinica {
             }
         }
         return null;
+    }
+
+    public void listarPagamentos(){
+        if(Clinica.totalPagamentos == 0){
+            System.out.printf("nenhum pagamento registrado.\n");
+        }else{
+            for(int i = 0; i < Clinica.totalPagamentos; i++){
+                System.out.printf("\n--- Pagamento %d ---\n", i + 1);
+                System.out.printf("paciente: " + pagamentos[i].consulta.paciente.nome + "\n");
+                System.out.printf("profissional: " + pagamentos[i].consulta.profissional.nome + "\n");
+                System.out.printf("valor: R$ %.2f\n", pagamentos[i].valorFinal);
+                System.out.printf("Metodo: " + pagamentos[i].metodoPagamento + "\n");
+                System.out.printf("status: " + pagamentos[i].status + "\n");
+            }
+        }
     }
 
 }
