@@ -442,7 +442,47 @@ public class Main {
                     break;
 
                 case 3:
-                    System.out.println("--- Remarcar consulta ---");
+                    System.out.println("\n--- Remarcar consulta ---\n");
+                    System.out.print("Digite o CPF do paciente: ");
+                    String cpfRemarcar = sc.nextLine();
+                    System.out.print("Digite a data atual da consulta (DD/MM/AAAA): ");
+                    String dataAtualRemarcar = sc.nextLine();
+                    System.out.print("Digite o horario atual da consulta (ex: 09:00): ");
+                    String horarioAtualRemarcar = sc.nextLine();
+                    
+                    Consultas consultaRemarcar = clinica.consultaBuscaParaRemarcar(cpfRemarcar, dataAtualRemarcar, horarioAtualRemarcar);
+                    
+                    if(consultaRemarcar == null){
+                        System.out.println("Consulta não encontrada ou não está agendada.");
+                        break;
+                    }
+                    
+                    System.out.print("Digite a nova data (DD/MM/AAAA) ou deixe em branco para manter: ");
+                    String novaData = sc.nextLine();
+                    System.out.print("Digite o novo horario (ex: 09:00) ou deixe em branco para manter: ");
+                    String novoHorario = sc.nextLine();
+                    
+                    if(novaData.trim().isEmpty()){
+                        novaData = dataAtualRemarcar;
+                    }
+                    if(novoHorario.trim().isEmpty()){
+                        novoHorario = horarioAtualRemarcar;
+                    }
+                    
+                    if(clinica.profissionalOcupado(consultaRemarcar.profissional, novaData, novoHorario)){
+                        System.out.println("Horário indisponível para a nova data/hora.");
+                        break;
+                    }
+                    
+                    consultaRemarcar.remarcar();
+                    
+                    int novaConsultaIndex = Clinica.totalConsultas;
+                    Consultas novaConsulta = new Consultas(consultaRemarcar.paciente, consultaRemarcar.profissional, novaData, novoHorario, consultaRemarcar.tipo);
+                    clinica.consultas[novaConsultaIndex] = novaConsulta;
+                    
+                    System.out.println("Consulta remarcada com sucesso!");
+                    System.out.println("Nova data: " + novaData);
+                    System.out.println("Novo horário: " + novoHorario);
                     break;
 
                 case 0:

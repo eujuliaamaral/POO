@@ -54,4 +54,8 @@ public class Consultas {
         this.multa = multa;
         this.justificativaCancelamento = "";
     }
+    
+    public void remarcar(){
+        this.status = "remarcada";
+    }
 }

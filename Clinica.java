@@ -169,4 +169,15 @@ public class Clinica {
         return 0.0;
     }
 
+    public Consultas consultaBuscaParaRemarcar(String cpf, String data, String horario){
+        for(int i = 0; i < totalConsultas; i++){
+            if(consultas[i].paciente.cpf.equals(cpf) && consultas[i].data.equals(data) && consultas[i].horario.equals(horario)){
+                if(consultas[i].status.equals("agendada")){
+                    return consultas[i];
+                }
+            }
+        }
+        return null;
+    }
+
 }
