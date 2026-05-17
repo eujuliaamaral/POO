@@ -76,11 +76,22 @@ public class Main {
             switch(op) {
 
                 case 1:
-                    System.out.println("\nCadastrar paciente...\n");
+                    System.out.println("\n--- Cadastrar paciente ---\n");
                     System.out.printf("Digite o nome do paciente:");
                     String nome = sc.nextLine();
                     System.out.printf("Digite o cpf do paciente:");
                     String cpf = sc.nextLine();
+                    boolean pacienteDuplicado = false;
+                    for(int i = 0; i < Clinica.totalProfissionais; i++){
+                        if(clinica.pacientes[i].cpf.equals(cpf)){
+                            System.out.printf("\nCadastro já foi feito!\n");
+                            pacienteDuplicado = true;
+                            break;
+                        }
+                    }
+                    if(pacienteDuplicado){
+                        break;
+                    }
                     System.out.printf("Digite a idade do paciente:");
                     String idadeTexto = sc.nextLine();
                     System.out.printf("Digite o telefone do paciente:");
@@ -108,19 +119,19 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("\nBuscar paciente...\n");
+                    System.out.println("\n--- Buscar paciente ---\n");
                     System.out.printf("Digite o cpf do paciente:");
                     String cpfbuscado = sc.nextLine();
                     clinica.listarPacientes(cpfbuscado);
                     break;
 
                 case 3:
-                    System.out.println("\nListar pacientes...\n");
+                    System.out.println("\n--- Listar pacientes ---\n");
                     clinica.listarPacientes();
                     break;
 
                 case 4:
-                    System.out.println("\nComplementar cadastro...\n");
+                    System.out.println("\n--- Complementar cadastro ---\n");
                     System.out.print("Digite o CPF do paciente que deseja atualizar: ");
                     String cpfBusca = sc.nextLine();
 
@@ -149,7 +160,7 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("\nDesativar cadastro...\n");
+                    System.out.println("\n--- Desativar cadastro ---\n");
                     System.out.print("Digite o CPF do paciente que deseja desativar: ");
                     String cpfDesativa = sc.nextLine();
 
@@ -157,7 +168,7 @@ public class Main {
 
                     if (pacienteDesativa != null) {
                         pacienteDesativa.ativo = false;
-                        System.out.println("O cadastro de " + pacienteDesativa.nome + " foi desativado com sucesso!");
+                        System.out.println("\nO cadastro de " + pacienteDesativa.nome + " foi desativado com sucesso!");
                     }
 
                     break;
@@ -191,17 +202,31 @@ public class Main {
             switch(op) {
 
                 case 1:
-                    System.out.println("\nCadastrar profissional...\n");
+                    System.out.println("\n--- Cadastrar profissional ---\n");
                     System.out.printf("Digite o nome do profissional:");
                     String nome = sc.nextLine();
                     System.out.printf("Digite a especialidade(clinica geral, fisioterapia, psicologia e nutrição):");
                     String especialidade = sc.nextLine();
-                    if(!especialidade.equals("clinica geral") && !especialidade.equals("fisioterapia") && !especialidade.equals("nutrição")){
-                        System.out.println("\nEspecialidade inválida!");
+                    if (!especialidade.equals("clinica geral") && 
+                        !especialidade.equals("fisioterapia") && 
+                        !especialidade.equals("nutrição")) {
+                        
+                        System.out.println("Especialidade inválida!");
                         break;
                     }
                     System.out.printf("Digite o registro profissional:");
                     String registroPro = sc.nextLine();
+                    boolean profissionalDuplicado = false;
+                    for(int i = 0; i < Clinica.totalProfissionais; i++){
+                        if(clinica.profissionais[i].registroPro.equals(registroPro)){
+                            System.out.printf("\nCadastro já foi feito!\n");
+                            profissionalDuplicado = true;
+                            break;
+                        }
+                    }
+                    if(profissionalDuplicado){
+                        break;
+                    }
                     System.out.printf("Digite o valor da Cosulta:");
                     double valorConsulta = sc.nextDouble();
                     sc.nextLine();
@@ -226,19 +251,19 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("\nListar profissionais...\n");
+                    System.out.println("\n--- Listar profissionais ---\n");
                     clinica.listarProfissionais();
                     break;
 
                 case 3:
-                    System.out.println("\nListar profissionais por especialidade...");
+                    System.out.println("\n--- Listar profissionais por especialidade ---");
                     System.out.printf("Digite a especialidade:");
                     String especialidadeBuscado = sc.nextLine();
                     clinica.listarProfissionais(especialidadeBuscado);
                     break;    
 
                 case 4:
-                    System.out.println("\nComplementar Cadastro...\n");
+                    System.out.println("\n--- Complementar Cadastro ---\n");
                     System.out.print("Digite o nome do profissional que deseja atualizar: ");
                     String nomeBusca = sc.nextLine();
 
@@ -282,7 +307,7 @@ public class Main {
 
         do {
 
-            System.out.println("Menu Consultas");
+            System.out.println("\nMenu Consultas");
             System.out.println("1 - Agendar consulta");
             System.out.println("2 - Cancelar consulta");
             System.out.println("3 - Remarcar consulta");
@@ -294,7 +319,7 @@ public class Main {
             switch(op) {
 
                 case 1:
-                    System.out.println("\n--- Agendar Consulta --- \n");
+                    System.out.println("\n--- Agendar Consulta ---\n");
                     System.out.print("Digite o CPF do paciente: ");
                     String cpf = sc.nextLine();
                     Paciente pacienteEncontrado = clinica.pacienteBusca(cpf);
@@ -303,6 +328,7 @@ public class Main {
                         break; 
                     }
                     if(pacienteEncontrado.ativo == false){
+                        System.out.print("\nO cpf esta desativado.\n");
                         break;
                     }
 
@@ -371,11 +397,11 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("Cancelar consulta...");
+                    System.out.println("--- Cancelar consulta ---");
                     break;
 
                 case 3:
-                    System.out.println("Remarcar consulta...");
+                    System.out.println("--- Remarcar consulta ---");
                     break;
 
                 case 0:
@@ -405,11 +431,11 @@ public class Main {
             switch(op) {
 
                 case 1:
-                    System.out.println("Registrar pagamento...");
+                    System.out.println("--- Registrar pagamento ---");
                     break;
 
                 case 2:
-                    System.out.println("Listar pagamentos...");
+                    System.out.println("--- Listar pagamentos ---");
                     break;
 
                 case 0:
