@@ -216,6 +216,7 @@ public class Main {
                     String especialidade = sc.nextLine();
                     if (!especialidade.equals("clinica geral") && 
                         !especialidade.equals("fisioterapia") && 
+                        !especialidade.equals("psicologia") &&
                         !especialidade.equals("nutrição")) {
                         
                         System.out.println("Especialidade inválida!");
