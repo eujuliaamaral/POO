@@ -89,7 +89,7 @@ public class Main {
                     System.out.printf("Digite o cpf do paciente:");
                     String cpf = sc.nextLine();
                     boolean pacienteDuplicado = false;
-                    for(int i = 0; i < Clinica.totalProfissionais; i++){
+                    for(int i = 0; i < Clinica.totalPacientes; i++){
                         if(clinica.pacientes[i].cpf.equals(cpf)){
                             System.out.printf("\nCadastro já foi feito!\n");
                             pacienteDuplicado = true;
