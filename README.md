@@ -24,12 +24,19 @@ Um sistema em Java desenvolvido com **Programação Orientada a Objetos (POO)** 
   - Registro de data e horário
   - Tipos de consultas (inicial ou acompanhamento)
 
+- Registro de Atendimento
+  - Observações durante a consulta
+  - Registro de diagnóstico
+  - Documentação de procedimentos realizados
+
 -  Gerenciamento de Pagamentos
   - Registro e controle de pagamentos
   - Suporte a diferentes formas de pagamento
 
 -  Relatórios
-  - Geração de relatórios do sistema
+  - Geração de relatórios gerais de consultas
+  - Visualização de informações de pacientes, profissionais e atendimentos
+  - Filtros e estatísticas do sistema
 
 ##  Como Usar
 
@@ -48,6 +55,7 @@ Ao iniciar, o programa exibirá um menu com as seguintes opções:
 2. **Profissionais** - Gerenciar profissionais de saúde
 3. **Consultas** - Agendar consultas
 4. **Pagamentos** - Gerenciar pagamentos
+5. **Relatórios** - Visualizar relatórios do sistema
 0. **Sair** - Encerrar o programa
 
 ##  Exemplo de Uso
@@ -57,17 +65,32 @@ Ao iniciar, o programa exibirá um menu com as seguintes opções:
 - Escolha cadastrar novo paciente
 - Preencha as informações solicitadas (nome, CPF, idade, telefone, convênio)
 
+### Cadastrar um Profissional
+- Selecione a opção "2 - Profissionais"
+- Escolha cadastrar novo profissional
+- Informe nome, especialidade, valor da consulta e dias de atendimento
+
 ### Agendar uma Consulta
 - Selecione a opção "3 - Consultas"
 - Escolha agendar nova consulta
 - Informe o paciente, profissional, data e horário desejados
+- O sistema verificará disponibilidade do profissional
 
-##  Conceitos de POO Utilizados
+### Registrar Atendimento
+- Durante uma consulta, você pode registrar:
+  - Observações do paciente
+  - Diagnóstico do profissional
+  - Procedimentos realizados
 
-- **Encapsulamento**: Dados das entidades protegidos em classes
-- **Construtores Sobrecarregados**: Múltiplas formas de inicializar objetos
-- **Métodos**: Operações específicas para cada entidade
-- **Abstração**: Representação de entidades do mundo real
+### Gerenciar Pagamentos
+- Selecione a opção "4 - Pagamentos"
+- Registre pagamentos de consultas
+- Informe a forma de pagamento e valor
+
+### Visualizar Relatórios
+- Selecione a opção "5 - Relatórios"
+- Visualize todas as consultas cadastradas
+- Verifique informações de pacientes, profissionais e atendimentos
 
 ##  Autores
 Davi Medeiros Dantas Soares 
