@@ -146,4 +146,27 @@ public class Clinica {
         }
     }
 
+    public Consultas consultaBusca(String cpf, String data, String horario){
+        for(int i = 0; i < totalConsultas; i++){
+            if(consultas[i].paciente.cpf.equals(cpf) && consultas[i].data.equals(data) && consultas[i].horario.equals(horario)){
+                return consultas[i];
+            }
+        }
+        return null;
+    }
+
+    public double calcularMulta(String horarioConsulta, String dataCancelamento, String horarioCancelamento){
+        int horaConsulta = Integer.parseInt(horarioConsulta.substring(0, 2));
+        int minConsulta = Integer.parseInt(horarioConsulta.substring(3, 5));
+        int horaCancelamento = Integer.parseInt(horarioCancelamento.substring(0, 2));
+        int minCancelamento = Integer.parseInt(horarioCancelamento.substring(3, 5));
+        
+        int minutosAte = (horaConsulta * 60 + minConsulta) - (horaCancelamento * 60 + minCancelamento);
+        
+        if(minutosAte < 120){
+            return 50.0;
+        }
+        return 0.0;
+    }
+
 }

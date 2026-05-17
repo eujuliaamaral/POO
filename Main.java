@@ -397,7 +397,48 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.println("--- Cancelar consulta ---");
+                    System.out.println("\n--- Cancelar consulta ---\n");
+                    System.out.print("Digite o CPF do paciente: ");
+                    String cpfCancelamento = sc.nextLine();
+                    System.out.print("Digite a data da consulta (DD/MM/AAAA): ");
+                    String dataCancelamento = sc.nextLine();
+                    System.out.print("Digite o horario da consulta (ex: 09:00): ");
+                    String horarioCancelamento = sc.nextLine();
+                    
+                    Consultas consultaCancelamento = clinica.consultaBusca(cpfCancelamento, dataCancelamento, horarioCancelamento);
+                    
+                    if(consultaCancelamento == null){
+                        System.out.println("Consulta não encontrada.");
+                        break;
+                    }
+                    
+                    if(!consultaCancelamento.status.equals("agendada")){
+                        System.out.println("Não é possível cancelar uma consulta que já foi " + consultaCancelamento.status + ".");
+                        break;
+                    }
+                    
+                    System.out.print("Deseja informar uma justificativa? (S/N): ");
+                    String temJustificativa = sc.nextLine();
+                    String justificativa = "";
+                    
+                    if(temJustificativa.equals("S") || temJustificativa.equals("s")){
+                        System.out.print("Digite a justificativa: ");
+                        justificativa = sc.nextLine();
+                    }
+                    
+                    System.out.print("Digite a hora atual (HH:MM) para calcular multa: ");
+                    String horaAtual = sc.nextLine();
+                    
+                    double multaCancelamento = clinica.calcularMulta(consultaCancelamento.horario, dataCancelamento, horaAtual);
+                    
+                    if(multaCancelamento > 0){
+                        System.out.println("Multa aplicada: R$ " + multaCancelamento);
+                    }else{
+                        System.out.println("Sem multa (cancelamento com mais de 2 horas de antecedência).");
+                    }
+                    
+                    consultaCancelamento.cancelar(multaCancelamento, justificativa);
+                    System.out.println("Consulta cancelada com sucesso!");
                     break;
 
                 case 3:
