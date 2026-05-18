@@ -165,6 +165,35 @@ Paciente inativo não pode agendar novas consultas.
   - **Relatório por Período**: Consultas entre duas datas
   - **Resumo Financeiro**: Total de faturamento, cancelamentos e multas
 
+## Execução e Commits
+- O projeto deve ser executado a partir do terminal com:
+  - `javac *.java`
+  - `java Main`
+- A branch avaliada é a `main`.
+- Para organização, é bom fazer commits claros com código funcional para cada entrega.
+
+## Conceitos aplicados no projeto
+- Sobrecarga de construtores em `Paciente`, `Profissionais`, `Consultas`, `Pagamentos` e `Atendimento`.
+- Sobrecarga de métodos para cadastro, consulta, cancelamento, remarcação e registro.
+- Uso de arrays de tamanho fixo (`Paciente[100]`, `Profissionais[100]`, `Consultas[200]`, `Pagamentos[200]`, `procedimentos[10]`).
+- Contadores estáticos para controlar quantidades pendentes (`Clinica.totalPacientes`, `Clinica.totalProfissionais`, `Clinica.totalConsultas`, `Clinica.totalPagamentos`).
+- Estruturas de decisão `if`, `switch` e estruturas de repetição `for`, `do/while`.
+- Métodos com e sem retorno em várias classes.
+- Uso de `Scanner` para a entrada de dados.
+
+## Jornadas de usuário
+1. Cadastro rápido de paciente com nome e CPF.
+2. Complemento de cadastro de paciente com idade e telefone.
+3. Complemento adicional de cadastro com convênio.
+4. Desativação de paciente e bloqueio de agendamento para inativos.
+5. Cadastro parcial de profissional e complementação posterior.
+6. Agendamento de consulta com escolha de profissional específico.
+7. Agendamento por especialidade com busca automática de profissional disponível.
+8. Cancelamento de consulta sem multa e com multa automática.
+9. Remarcação de consulta no mesmo dia e em data diferente.
+10. Registro de atendimento simples ou completo com procedimentos e resumo.
+11. Registro de pagamento com cálculo automático, cartão parcelado e relatório financeiro.
+
 ##  Autores
 Davi Medeiros Dantas Soares 
 
