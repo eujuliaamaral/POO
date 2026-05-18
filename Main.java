@@ -75,6 +75,7 @@ public class Main {
             System.out.println("3 - Listar pacientes");
             System.out.println("4 - Cadastro complementar");
             System.out.println("5 - Desativar paciente");
+            System.out.println("6 - Listar pacientes inativos");
             System.out.println("0 - Voltar");
             System.out.print("Opcao: ");
 
@@ -190,6 +191,10 @@ public class Main {
                     }
 
                     break;
+
+                case 6:
+                    System.out.println("\n--- Listar Pacientes inativos ---\n");
+                    clinica.listarPacientesInativos();
 
                 case 0:
                     break;

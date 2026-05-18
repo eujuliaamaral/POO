@@ -148,6 +148,25 @@ public class Clinica {
         }
     }
 
+    public void listarPacientesInativos() {
+        int numeroInativos = 0;
+        String[] clientesInativos = new String[Clinica.totalPacientes];
+        if (Clinica.totalPacientes == 0){
+            System.out.printf("Nenhum paciente cadastrado.\n");
+        }else{
+            for (int i = 0; i < Clinica.totalPacientes; i++) {
+                if(!pacientes[i].ativo) {
+                    numeroInativos++;
+                    clientesInativos[i] = pacientes[i].nome;
+                }
+            }
+            System.out.printf("Existem %d pacientes inativos, seus nomes são: \n", numeroInativos);
+            for (int i = 0; i < numeroInativos; i++) {
+                System.out.print(clientesInativos[i] + "\n");
+            }
+        }
+    }
+
     public void listarProfissionais(){
         if(Clinica.totalProfissionais == 0){
             System.out.printf("Nenhum profissional cadastrado.\n");
